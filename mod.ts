@@ -1,4 +1,4 @@
-import { Application, Router, v4 } from "./deps.ts";
+import { Application, Router, oakCors } from "./deps.ts";
 
 const _respond = (data: any, status: boolean = true): any => {
   return {
@@ -23,6 +23,24 @@ router.post("/auth/logout", (ctx: any) => {
 });
 
 const app = new Application();
+
+app.use(oakCors())
+
+// Logger
+app.use(async (ctx: any, next: any) => {
+  await next();
+  const rt = ctx.response.headers.get("X-Response-Time");
+  console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
+});
+
+// Timing
+app.use(async (ctx: any, next: any) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  ctx.response.headers.set("X-Response-Time", `${ms}ms`);
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
