@@ -23,7 +23,7 @@ router.post("/auth/logout", (ctx: any) => {
   ctx.response.body = _respond({ message: "hello, friend!" });
 });
 router.get("/entities", (ctx: any) => {
-  ctx.response.body = _respond(entityCollection);
+  ctx.response.body = _respond(Array.from(entityCollection.values()));
 });
 router.get("/entities/:id", (ctx: any) => {
   if (ctx.params && ctx.params.id && entityCollection.has(ctx.params.id)) {
