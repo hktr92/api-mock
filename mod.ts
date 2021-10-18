@@ -1,4 +1,5 @@
 import { Application, Router, oakCors } from "./deps.ts";
+import { entityCollection } from "./entities.mock.ts";
 
 const _respond = (data: any, status: boolean = true): any => {
   return {
@@ -20,6 +21,14 @@ router.post("/auth/login", (ctx: any) => {
 });
 router.post("/auth/logout", (ctx: any) => {
   ctx.response.body = _respond({ message: "hello, friend!" });
+});
+router.get("/entities", (ctx: any) => {
+  ctx.response.body = _respond(entityCollection);
+});
+router.get("/entities/:id", (ctx: any) => {
+  if (ctx.params && ctx.params.id && entityCollection.has(ctx.params.id)) {
+    ctx.response.body = _respond(entityCollection.get(ctx.params.id));
+  }
 });
 
 const app = new Application();
