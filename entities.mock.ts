@@ -17,6 +17,7 @@ const dummyContent = '# Lorem ipsum dolor sit amet\n' +
 const entities = new Map<number, any>()
 for (let id = 1; id < 10; id++) {
     entities.set(id, {
+        id: crypto.randomUUID(),
         title: `title ${id}`,
         subtitle: 'Marvelous!',
         content: dummyContent,
