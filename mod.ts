@@ -26,8 +26,8 @@ router.get("/entities", (ctx: any) => {
   ctx.response.body = _respond(Array.from(entityCollection.values()));
 });
 router.get("/entities/:id", (ctx: any) => {
-  if (ctx.params && ctx.params.id && entityCollection.has(ctx.params.id)) {
-    ctx.response.body = _respond(entityCollection.get(ctx.params.id));
+  if (ctx.params && ctx.params.id && entityCollection.has(+ctx.params.id)) {
+    ctx.response.body = _respond(entityCollection.get(+ctx.params.id));
   }
 });
 
